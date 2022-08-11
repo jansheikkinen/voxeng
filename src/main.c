@@ -25,7 +25,11 @@ enum VoxelType {
 //
   // Placehold voxel colours
 const Color voxelColors[] = {
+<<<<<<< HEAD
   {   0,   0,   0,   0 },
+=======
+  {   0,   0,   0, 0 },
+>>>>>>> b6bab4e87fc76b4ed3fb85a2db75c778e41926a6
   { 140,  80,  30, 255 },
   { 120, 120, 120, 255 },
 };
