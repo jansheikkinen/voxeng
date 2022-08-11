@@ -24,15 +24,7 @@ const Color voxelColors[] = {
 };
 
 void renderVoxel(struct Voxel voxel) {
-  DrawCube(
-      voxel.position,
-      voxelSize, voxelSize, voxelSize,
-      voxelColors[voxel.type]);
-
-  DrawCubeWires(
-      voxel.position,
-      voxelSize, voxelSize, voxelSize,
-      BLACK);
+  DrawCube(voxel.position, voxelSize, voxelSize, voxelSize, voxelColors[voxel.type]);
 }
 
 int l_setVoxel(lua_State *L) {
@@ -104,6 +96,8 @@ int main(void) {
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
       for(size_t j = 0; j < pow(chunkSize, 3); j++) {
+        struct Voxel voxel = world.chunks[i]->voxels[j];
+        printf("%f, %f, %f\n", voxel.position.x, voxel.position.y, voxel.position.z);
         renderVoxel(world.chunks[i]->voxels[j]);
       }
     }
