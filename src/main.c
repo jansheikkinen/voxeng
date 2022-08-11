@@ -126,13 +126,14 @@ void renderVoxel(struct Voxel voxel) {
 
 
 int l_setVoxel(lua_State *L) {
+  const struct World *world = lua_topointer(L, -4);
   const float x = lua_tonumber(L, -3);
   const float y = lua_tonumber(L, -2);
   const float z = lua_tonumber(L, -1);
 
-  const float voxelSizeHalf = voxelSize / 2.0;
-
-  DrawCube((Vector3){ x + voxelSizeHalf, y + voxelSizeHalf, z + voxelSizeHalf }, voxelSize, voxelSize, voxelSize, voxelColors[VOXEL_STONE]);
+  // const float voxelSizeHalf = voxelSize / 2.0;
+  world->chunks[posToIndex((Vector3){0, 0, 0}, worldSize)]->voxels[posToIndex((Vector3){x, y, z}, chunkSize)].type = VOXEL_DIRT;
+  // DrawCube((Vector3){ x + voxelSizeHalf, y + voxelSizeHalf, z + voxelSizeHalf }, voxelSize, voxelSize, voxelSize, voxelColors[VOXEL_STONE]);
   // DrawCubeWires((Vector3){ x + voxelSizeHalf, y + voxelSizeHalf, z + voxelSizeHalf }, voxelSize, voxelSize, voxelSize, BLACK);
 
   return 0;
@@ -181,15 +182,18 @@ int main(void) {
     lua_pushcfunction(L, l_setVoxel);
     lua_setglobal(L, "setVoxel");
 
+    lua_pushlightuserdata(L, &world);
+    lua_setglobal(L, "world");
+
     lua_getglobal(L, "draw");
     lua_pcall(L, 0, 0, 0);
 
-    // // Render the world
-    // for(size_t i = 0; i < pow(worldSize, 3); i++) {
-    //   for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-    //     renderVoxel(world.chunks[i]->voxels[j]);
-    //   }
-    // }
+    // Render the world
+    for(size_t i = 0; i < pow(worldSize, 3); i++) {
+      for(size_t j = 0; j < pow(chunkSize, 3); j++) {
+        renderVoxel(world.chunks[i]->voxels[j]);
+      }
+    }
 
     // Draw grids to show voxel, chunk, and world sizes
     // DrawGrid(2 * chunkSize * voxelSize, voxelSize);
