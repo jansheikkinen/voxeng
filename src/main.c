@@ -35,6 +35,7 @@ const Color voxelColors[] = {
 struct Voxel {
   Vector3 position;
   enum VoxelType type;
+  Texture2D texture;
 };
 
 // Groups of voxels
@@ -68,7 +69,8 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
               (chunkSize * position.y) + (y * voxelSize) + voxelSizeHalf,
               (chunkSize * position.z) + (z * voxelSize) + voxelSizeHalf,
             },
-           VOXEL_STONE
+           VOXEL_STONE,
+           LoadTexture("texture.png")
         };
       }
     }
@@ -109,7 +111,8 @@ void destroyWorld(struct World* world) {
 }
 
 void renderVoxel(struct Voxel voxel) {
-  DrawCube(
+  DrawCubeTexture(
+      voxel.texture,
       voxel.position,
       voxelSize, voxelSize, voxelSize,
       voxelColors[voxel.type]);
