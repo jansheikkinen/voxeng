@@ -124,6 +124,9 @@ void renderVoxel(struct Voxel voxel) {
 int main(void) {
   // Initialise the window
   InitWindow(scrWidth, scrHeight, "test");
+  
+  struct World world = { 0 };
+  initializeWorld(&world);
 
   // Initialise the camera
   Camera3D camera = { 0 };
@@ -135,9 +138,6 @@ int main(void) {
   SetCameraMode(camera, CAMERA_FREE);
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
-
-  struct World world = { 0 };
-  initializeWorld(&world);
 
   // Game loop
   while(!WindowShouldClose()) {
