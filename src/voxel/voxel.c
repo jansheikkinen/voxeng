@@ -78,9 +78,10 @@ void initializeWorld(struct World* world) {
   for(size_t z = 0; z < worldSize; z++) {
     for(size_t y = 0; y < worldSize; y++) {
       for(size_t x = 0; x < worldSize; x++) {
-        size_t index = posToIndex(x, y, z, worldSize);
-        world->chunks[index] = malloc(sizeof(struct Chunk));
-        initializeChunk(world->chunks[index], (Vector3){ x, y, z });
+        struct Chunk* chunk = worldPosToChunk(world, x, y, z);
+        chunk = malloc(sizeof(struct Chunk));
+
+        initializeChunk(chunk, (Vector3){ x, y, z });
       }
     }
   }
