@@ -29,7 +29,10 @@ const Color voxelColors[] = {
   {   0,   0,   0,   0 },
 =======
   {   0,   0,   0, 0 },
+<<<<<<< HEAD
 >>>>>>> b6bab4e87fc76b4ed3fb85a2db75c778e41926a6
+=======
+>>>>>>> refs/remotes/origin/main
   { 140,  80,  30, 255 },
   { 120, 120, 120, 255 },
 };
