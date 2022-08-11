@@ -22,13 +22,12 @@ enum VoxelType {
   VOXEL_DIRT  = 1,
   VOXEL_STONE = 2,
 };
-
-// Just a placeholder
-// Get the voxel's color by using its type(above) as the index
+//
+  // Placehold voxel colours
 const Color voxelColors[] = {
-  {   0,   0,   0, 0 },
-  { 140,  80,  30, 1 },
-  { 120, 120, 120, 1 },
+  {   0,   0,   0,   0 },
+  { 140,  80,  30, 255 },
+  { 120, 120, 120, 255 },
 };
 
 // The basic building blocks
@@ -78,7 +77,13 @@ int main(void) {
     // The 3D stuff
     BeginMode3D(camera);
 
-    // World would be rendered here
+    // Render the world
+    DrawCube((Vector3){ 1, 1, 1 },
+        voxelSize, voxelSize, voxelSize,
+        voxelColors[VOXEL_DIRT]);
+    DrawCubeWires((Vector3){ 1, 1, 1 },
+          voxelSize, voxelSize, voxelSize,
+          BLACK);
 
     // Draw grids to show voxel, chunk, and world sizes
     DrawGrid(chunkSize * voxelSize, voxelSize);
