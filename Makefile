@@ -7,7 +7,7 @@ SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 BUILD = build
 
-all: dirs build
+all: dirs voxeng
 
 dirs:
 	mkdir -p $(BUILD) src include tests
