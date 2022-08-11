@@ -27,8 +27,8 @@ enum VoxelType {
 // Get the voxel's color by using its type(above) as the index
 const Color voxelColors[] = {
   {   0,   0,   0, 0 },
-  { 140,  80,  30, 1 },
-  { 120, 120, 120, 1 },
+  { 140,  80,  30, 255 },
+  { 120, 120, 120, 255 },
 };
 
 // The basic building blocks
