@@ -28,13 +28,6 @@ enum VoxelType {
   VOXEL_STONE = 2,
 };
 
-// Placehold voxel colours
-const Color voxelColors[] = {
-  {   0,   0,   0,   0 },
-  { 140,  80,  30, 255 },
-  { 120, 120, 120, 255 },
-};
-
 // The basic building blocks
 struct Voxel {
   Vector3 position;
@@ -119,7 +112,7 @@ void renderVoxel(struct Voxel voxel) {
       voxel.texture,
       voxel.position,
       voxelSize, voxelSize, voxelSize,
-      voxelColors[voxel.type]);
+      (Color){255, 255, 255, 255});
 
   // DrawCubeWires(
   //     voxel.position,
