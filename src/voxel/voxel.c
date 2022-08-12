@@ -117,6 +117,8 @@ void destroyWorldList(struct WorldList* worldlist) {
 // WORLD LIST APPENDING
 
 void appendWorldList(struct WorldList* worldlist, struct World* world) {
+  printf("%ld\n", (long)worldlist);
+
   if(worldlist->size + 1 >= worldlist->capacity) {
     worldlist->capacity *= 1.5;
     
@@ -127,10 +129,10 @@ void appendWorldList(struct WorldList* worldlist, struct World* world) {
     }
     
     worldlist->worlds = newWorldlist;
-    worldlist->worlds[worldlist->size] = world;
-
-    worldlist->size += 1;
+    worldlist->worlds[worldlist->size++] = world;
   } else {
     worldlist->worlds[worldlist->size++] = world;
+    printf("%ld\n", (long)worldlist->worlds[worldlist->size - 1]);
+    printf("%ld\n", (long)worldlist->worlds[worldlist->size]);
   }
 }
