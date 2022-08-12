@@ -51,6 +51,8 @@ void initializeWorldList(struct WorldList*);
 
 void destroyChunk(struct Chunk*);
 void destroyWorld(struct World*);
-void destroyWorldlist(struct WorldList*);
+void destroyWorldList(struct WorldList*);
+
+void appendWorldList(struct WorldList*, struct World* world);
 
 #endif

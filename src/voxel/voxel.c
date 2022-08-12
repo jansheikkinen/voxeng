@@ -113,3 +113,24 @@ void destroyWorldList(struct WorldList* worldlist) {
     destroyWorld(worldlist->worlds[i]);
   }
 }
+
+// WORLD LIST APPENDING
+
+void appendWorldList(struct WorldList* worldlist, struct World* world) {
+  if(worldlist->size + 1 >= worldlist->capacity) {
+    worldlist->capacity *= 1.5;
+    
+    struct WorldList* newWorldlist = calloc(worldlist->capacity, sizeof(struct World*));
+    
+    for(size_t i = 0; i < worldlist->size; i++) {
+      newWorldlist[i] = worldlist[i];
+    }
+    
+    worldlist->worlds = newWorldlist;
+    worldlist->worlds[worldlist->size] = world;
+
+    worldlist->size += 1;
+  } else {
+    worldlist->worlds[worldlist->size++] = world;
+  }
+}
