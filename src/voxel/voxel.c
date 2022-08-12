@@ -2,37 +2,34 @@
 
 #include "voxel.h"
 
-#include <stdio.h>
 // INDEX FUNCTIONS
 
 size_t posToIndex(int x, int y, int z, int mult) {
   return abs((z * mult * mult) + (y * mult) + x);
 }
 
+size_t getChunkIndex(int x, int y, int z) {
+  return posToIndex(x, y, z, worldSize);
+}
+
+size_t getVoxelIndex(int x, int y, int z) {
+  return posToIndex(x, y, z, chunkSize);
+}
+
 struct Voxel* chunkPosToVoxel(struct Chunk* chunk, int x, int y, int z) {
-  return &chunk->voxels[posToIndex(x, y, z, chunkSize)];
+  return &chunk->voxels[getVoxelIndex(x, y, z)];
 }
 
 struct Voxel* chunkVector3ToVoxel(struct Chunk* chunk, Vector3 position) {
-  return &chunk->voxels[
-    posToIndex(position.x, position.y, position.z, chunkSize)];
+  return &chunk->voxels[getVoxelIndex(position.x, position.y, position.z)];
 }
 
 struct Chunk* worldPosToChunk(struct World* world, int x, int y, int z) {
-  size_t index = posToIndex(x, y, z, worldSize);
-  struct Chunk* chunk = world->chunks[index];
-
-  printf("worldPos world->chunks %ld\n", (long)world->chunks);
-  printf("worldPos index %d %d %d -> %ld\n", x, y, z, index);
-  printf("worldPos posToIndex %ld\n", (long)world->chunks[index]);
-  printf("worldPos chunk %ld\n", (long)chunk);
-
-  return chunk;
+  return world->chunks[getChunkIndex(x, y, z)];
 }
 
 struct Chunk* worldVector3ToChunk(struct World* world, Vector3 position) {
-  return world->chunks[
-    posToIndex(position.x, position.y, position.z, worldSize)];
+  return world->chunks[getChunkIndex(position.x, position.y, position.z)];
 }
 
 struct Voxel* worldPosToVoxel(struct World* world,
@@ -61,7 +58,6 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
       for(size_t x = 0; x < chunkSize; x++) {
         float voxelSizeHalf = voxelSize / 2.0;
 
-        printf("test ");
         struct Voxel* voxel = chunkPosToVoxel(chunk, x, y, z);
         voxel->type = VOXEL_STONE;
         voxel->position = (Vector3){
@@ -76,14 +72,13 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
 
 void initializeWorld(struct World* world) {
   world->chunks = calloc(pow(worldSize, 3), sizeof(struct Chunk*));
-  printf("initWorld world->chunks: %ld\n", (long)world->chunks);
 
   for(size_t z = 0; z < worldSize; z++) {
     for(size_t y = 0; y < worldSize; y++) {
       for(size_t x = 0; x < worldSize; x++) {
-        struct Chunk* chunk = worldPosToChunk(world, x, y, z);
-        chunk->position = (Vector3){ x, y, z };
-        //initializeChunk(chunk, (Vector3){ x, y, z });
+        size_t index = posToIndex(x, y, z, worldSize);
+        world->chunks[index] = malloc(sizeof(struct Chunk));
+        initializeChunk(world->chunks[index], (Vector3){ x, y, z });
       }
     }
   }

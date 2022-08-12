@@ -85,7 +85,6 @@ int main(void) {
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
 
-  printf("test\n\n");
   // Game loop
   while(!WindowShouldClose()) {
     // Game logic
