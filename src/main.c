@@ -80,6 +80,7 @@ int main(void) {
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
 
+  printf("test\n\n");
   // Game loop
   while(!WindowShouldClose()) {
     // Game logic
@@ -96,8 +97,6 @@ int main(void) {
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
       for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        struct Voxel voxel = world.chunks[i]->voxels[j];
-        printf("%f, %f, %f\n", voxel.position.x, voxel.position.y, voxel.position.z);
         renderVoxel(world.chunks[i]->voxels[j]);
       }
     }
