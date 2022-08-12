@@ -43,7 +43,7 @@ int l_setVoxel(lua_State *L) {
   lua_getglobal(L, "_World");
   struct World *world = lua_touserdata(L, -1);
 
-  worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_UNDEFINED;
+  worldVector3ToVoxel(world, (Vector3){(int)(x)/chunkSize, (int)(y)/chunkSize, (int)(z)/chunkSize}, (Vector3){(int)(x)%chunkSize, (int)(y)%chunkSize, (int)(z)%chunkSize})->type = VOXEL_UNDEFINED;
 
   return 0;
 }
