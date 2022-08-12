@@ -43,7 +43,8 @@ int l_setVoxel(lua_State *L) {
   lua_getglobal(L, "_World");
   struct World *world = lua_touserdata(L, -1);
 
-  worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_STONE;
+  printf("heloo!!!!!!!!!!!!!!\n");
+  worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_UNDEFINED;
 
   return 0;
 }
@@ -66,8 +67,8 @@ int main(void) {
   lua_setglobal(L, "_World");
 
   // Load C functions into Lua
-  // lua_pushcfunction(L, l_setVoxel);
-  // lua_setglobal(L, "setVoxel");
+  lua_pushcfunction(L, l_setVoxel);
+  lua_setglobal(L, "setVoxel");
 
   // Do file
   luaL_dofile(L, "src/script.lua");
