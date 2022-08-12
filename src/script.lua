@@ -1,1 +1,1 @@
-setVoxel(world, 0, 0, 0)
+setVoxel(0, 0, 0)
