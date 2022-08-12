@@ -122,10 +122,12 @@ void renderVoxel(struct Voxel voxel) {
 
 
 int l_setVoxel(lua_State *L) {
-  const struct World *world = lua_topointer(L, -4);
   const float x = lua_tonumber(L, -3);
   const float y = lua_tonumber(L, -2);
   const float z = lua_tonumber(L, -1);
+  
+  lua_getglobal(L, "_World");
+  const struct World *world = lua_topointer(L, -1);
 
   // const float voxelSizeHalf = voxelSize / 2.0;
   world->chunks[posToIndex((Vector3){0, 0, 0}, worldSize)]->voxels[posToIndex((Vector3){x, y, z}, chunkSize)].type = VOXEL_DIRT;
@@ -150,7 +152,7 @@ int main(void) {
 
   // Load world global into Lua
   lua_pushlightuserdata(L, &world);
-  lua_setglobal(L, "world");
+  lua_setglobal(L, "_World");
 
   // Load C functions into Lua
   lua_pushcfunction(L, l_setVoxel);
