@@ -36,6 +36,11 @@ struct WorldList {
   size_t size;
 };
 
+struct Game {
+  struct WorldList worldlist;
+  size_t* voxel_ids;
+};
+
 struct Voxel* chunkPosToVoxel(struct Chunk*, int, int, int);
 struct Voxel* chunkVector3ToVoxel(struct Chunk*, Vector3);
 
@@ -48,10 +53,12 @@ struct Voxel* worldVector3ToVoxel(struct World*, Vector3, Vector3);
 void initializeChunk(struct Chunk*, Vector3);
 void initializeWorld(struct World*);
 void initializeWorldList(struct WorldList*);
+void initializeGame(struct Game*);
 
 void destroyChunk(struct Chunk*);
 void destroyWorld(struct World*);
 void destroyWorldList(struct WorldList*);
+void destroyGame(struct Game*);
 
 void appendWorldList(struct WorldList*, struct World* world);
 

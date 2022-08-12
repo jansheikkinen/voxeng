@@ -92,6 +92,10 @@ void initializeWorldList(struct WorldList* worldlist) {
   worldlist->worlds = calloc(worldlist->capacity, sizeof(struct World*));
 }
 
+void initializeGame(struct Game* game) {
+  initializeWorldList(&game->worldlist);
+}
+
 // DESTRUCTOR FUNCTIONS
 
 void destroyChunk(struct Chunk* chunk) {
@@ -112,6 +116,10 @@ void destroyWorldList(struct WorldList* worldlist) {
   for(size_t i = 0; i < worldlist->size; i++) {
     destroyWorld(worldlist->worlds[i]);
   }
+}
+
+void destroyGame(struct Game* game) {
+  destroyWorldList(&game->worldlist);
 }
 
 // WORLD LIST APPENDING

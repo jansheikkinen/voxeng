@@ -40,10 +40,10 @@ int l_setVoxel(lua_State *L) {
   const float y = lua_tonumber(L, -2);
   const float z = lua_tonumber(L, -1);
   
-  lua_getglobal(L, "_World");
-  struct WorldList *worldlist = lua_touserdata(L, -1);
+  lua_getglobal(L, "_game_data");
+  struct Game* game = lua_touserdata(L, -1);
 
-  worldVector3ToVoxel(worldlist->worlds[0], (Vector3){(int)(x)/chunkSize, (int)(y)/chunkSize, (int)(z)/chunkSize}, (Vector3){(int)(x)%chunkSize, (int)(y)%chunkSize, (int)(z)%chunkSize})->id = VOXEL_UNDEFINED;
+  worldVector3ToVoxel(game->worldlist.worlds[0], (Vector3){(int)(x)/chunkSize, (int)(y)/chunkSize, (int)(z)/chunkSize}, (Vector3){(int)(x)%chunkSize, (int)(y)%chunkSize, (int)(z)%chunkSize})->id = VOXEL_UNDEFINED;
 
   return 0;
 }
@@ -52,12 +52,13 @@ int main(void) {
   // Initialise the window
   InitWindow(scrWidth, scrHeight, "test");
 
+  struct Game game = { 0 };
+  initializeGame(&game);
+
   struct World world = { 0 };
   initializeWorld(&world);
-  
-  struct WorldList worldlist = { 0 };
-  initializeWorldList(&worldlist);
-  appendWorldList(&worldlist, &world);
+
+  appendWorldList(&game.worldlist, &world);
 
   // Initialize Lua state
   lua_State *L = luaL_newstate();
@@ -66,8 +67,8 @@ int main(void) {
   luaL_openlibs(L); 
 
   // Load world global into Lua
-  lua_pushlightuserdata(L, &worldlist);
-  lua_setglobal(L, "_World");
+  lua_pushlightuserdata(L, &game);
+  lua_setglobal(L, "_game_data");
 
   // Load C functions into Lua
   lua_createtable(L, 0, 4);
@@ -108,7 +109,7 @@ int main(void) {
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
       for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        renderVoxel(worldlist.worlds[0]->chunks[i]->voxels[j]);
+        renderVoxel(game.worldlist.worlds[0]->chunks[i]->voxels[j]);
       }
     }
 
@@ -128,7 +129,6 @@ int main(void) {
   // Actually close the window
   CloseWindow();
 
-  destroyWorld(&world);
-  destroyWorldList(&worldlist);
+  destroyGame(&game);
   return 0;
 }
