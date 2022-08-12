@@ -146,6 +146,24 @@ int main(void) {
   struct World world = { 0 };
   initializeWorld(&world);
 
+  // Initialize Lua state
+  lua_State *L = luaL_newstate();
+
+  // Load Lua libraries
+  luaL_openlibs(L); 
+
+  // Do file
+  luaL_dofile(L, "src/script.lua");
+
+  lua_pushcfunction(L, l_setVoxel);
+  lua_setglobal(L, "setVoxel");
+
+  lua_pushlightuserdata(L, &world);
+  lua_setglobal(L, "world");
+
+  lua_getglobal(L, "draw");
+  lua_pcall(L, 0, 0, 0);
+
   // Initialise the camera
   Camera3D camera = { 0 };
   camera.position = (Vector3){ chunkSize, chunkSize, chunkSize };
@@ -169,24 +187,6 @@ int main(void) {
 
     // The 3D stuff
     BeginMode3D(camera);
-
-    // Initialize Lua state
-    lua_State *L = luaL_newstate();
-
-    // Load Lua libraries
-    luaL_openlibs(L); 
-
-    // Do file
-    luaL_dofile(L, "src/script.lua");
-
-    lua_pushcfunction(L, l_setVoxel);
-    lua_setglobal(L, "setVoxel");
-
-    lua_pushlightuserdata(L, &world);
-    lua_setglobal(L, "world");
-
-    lua_getglobal(L, "draw");
-    lua_pcall(L, 0, 0, 0);
 
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
