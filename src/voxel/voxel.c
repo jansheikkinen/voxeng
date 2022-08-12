@@ -107,3 +107,9 @@ void destroyWorld(struct World* world) {
     }
   }
 }
+
+void destroyWorldList(struct WorldList* worldlist) {
+  for(size_t i = 0; i < worldlist->size; i++) {
+    destroyWorld(worldlist->worlds[i]);
+  }
+}
