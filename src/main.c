@@ -24,17 +24,11 @@ enum VoxelType {
   VOXEL_STONE = 2,
 };
 
-// Placehold voxel colours
-const Color voxelColors[] = {
-  {   0,   0,   0,   0 },
-  { 140,  80,  30, 255 },
-  { 120, 120, 120, 255 },
-};
-
 // The basic building blocks
 struct Voxel {
   Vector3 position;
   enum VoxelType type;
+  Texture2D texture;
 };
 
 // Groups of voxels
@@ -68,7 +62,8 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
               (chunkSize * position.y) + (y * voxelSize) + voxelSizeHalf,
               (chunkSize * position.z) + (z * voxelSize) + voxelSizeHalf,
             },
-           VOXEL_STONE
+           VOXEL_STONE,
+           LoadTexture("texture.png")
         };
       }
     }
@@ -109,15 +104,16 @@ void destroyWorld(struct World* world) {
 }
 
 void renderVoxel(struct Voxel voxel) {
-  DrawCube(
+  DrawCubeTexture(
+      voxel.texture,
       voxel.position,
       voxelSize, voxelSize, voxelSize,
-      voxelColors[voxel.type]);
+      (Color){255, 255, 255, 255});
 
-  DrawCubeWires(
-      voxel.position,
-      voxelSize, voxelSize, voxelSize,
-      BLACK);
+  // DrawCubeWires(
+  //     voxel.position,
+  //     voxelSize, voxelSize, voxelSize,
+  //     BLACK);
 }
 
 
