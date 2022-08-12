@@ -120,10 +120,10 @@ void appendWorldList(struct WorldList* worldlist, struct World* world) {
   if(worldlist->size + 1 >= worldlist->capacity) {
     worldlist->capacity *= 1.5;
     
-    struct WorldList* newWorldlist = calloc(worldlist->capacity, sizeof(struct World*));
+    struct World** newWorldlist = calloc(worldlist->capacity, sizeof(struct World*));
     
     for(size_t i = 0; i < worldlist->size; i++) {
-      newWorldlist[i] = worldlist[i];
+      newWorldlist[i] = worldlist->worlds[i];
     }
     
     worldlist->worlds = newWorldlist;
