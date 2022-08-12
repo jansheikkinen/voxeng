@@ -41,7 +41,7 @@ int l_setVoxel(lua_State *L) {
   const float z = lua_tonumber(L, -1);
   
   lua_getglobal(L, "_World");
-  struct World *world = lua_topointer(L, -1);
+  struct World *world = lua_touserdata(L, -1);
 
   worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_STONE;
 
