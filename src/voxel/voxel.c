@@ -60,7 +60,6 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
       for(size_t x = 0; x < chunkSize; x++) {
         float voxelSizeHalf = voxelSize / 2.0;
 
-        printf("test ");
         struct Voxel* voxel = chunkPosToVoxel(chunk, x, y, z);
         voxel->type = VOXEL_STONE;
         voxel->position = (Vector3){

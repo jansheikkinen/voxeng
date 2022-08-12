@@ -24,7 +24,15 @@ const Color voxelColors[] = {
 };
 
 void renderVoxel(struct Voxel voxel) {
-  DrawCube(voxel.position, voxelSize, voxelSize, voxelSize, voxelColors[voxel.type]);
+  DrawCube(
+      voxel.position,
+      voxelSize, voxelSize, voxelSize,
+      voxelColors[voxel.type]);
+
+  DrawCubeWires(
+      voxel.position,
+      voxelSize, voxelSize, voxelSize,
+      BLACK);
 }
 
 int l_setVoxel(lua_State *L) {
@@ -80,7 +88,6 @@ int main(void) {
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
 
-  printf("test\n\n");
   // Game loop
   while(!WindowShouldClose()) {
     // Game logic
