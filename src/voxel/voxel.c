@@ -60,6 +60,7 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
       for(size_t x = 0; x < chunkSize; x++) {
         float voxelSizeHalf = voxelSize / 2.0;
 
+        printf("test ");
         struct Voxel* voxel = chunkPosToVoxel(chunk, x, y, z);
         voxel->id = 0;
         voxel->position = (Vector3){
@@ -78,10 +79,9 @@ void initializeWorld(struct World* world) {
   for(size_t z = 0; z < worldSize; z++) {
     for(size_t y = 0; y < worldSize; y++) {
       for(size_t x = 0; x < worldSize; x++) {
-        struct Chunk* chunk = worldPosToChunk(world, x, y, z);
-        chunk = malloc(sizeof(struct Chunk));
-
-        initializeChunk(chunk, (Vector3){ x, y, z });
+        size_t index = posToIndex(x, y, z, worldSize);
+        world->chunks[index] = malloc(sizeof(struct Chunk));
+        initializeChunk(world->chunks[index], (Vector3){ x, y, z });
       }
     }
   }
