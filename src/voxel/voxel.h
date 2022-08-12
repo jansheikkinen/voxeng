@@ -18,7 +18,7 @@ enum VoxelType {
 
 struct Voxel {
   Vector3 position;
-  enum VoxelType type;
+  size_t id;
 };
 
 struct Chunk {
