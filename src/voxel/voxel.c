@@ -86,6 +86,12 @@ void initializeWorld(struct World* world) {
   }
 }
 
+void initializeWorldList(struct WorldList* worldlist) {
+  worldlist->capacity = 4;
+  worldlist->size = 0;
+  worldlist->worlds = calloc(worldlist->capacity, sizeof(struct World*));
+}
+
 // DESTRUCTOR FUNCTIONS
 
 void destroyChunk(struct Chunk* chunk) {
