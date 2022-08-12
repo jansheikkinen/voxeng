@@ -152,17 +152,16 @@ int main(void) {
   // Load Lua libraries
   luaL_openlibs(L); 
 
-  // Do file
-  luaL_dofile(L, "src/script.lua");
-
-  lua_pushcfunction(L, l_setVoxel);
-  lua_setglobal(L, "setVoxel");
-
+  // Load world global into Lua
   lua_pushlightuserdata(L, &world);
   lua_setglobal(L, "world");
 
-  lua_getglobal(L, "draw");
-  lua_pcall(L, 0, 0, 0);
+  // Load C functions into Lua
+  lua_pushcfunction(L, l_setVoxel);
+  lua_setglobal(L, "setVoxel");
+
+  // Do file
+  luaL_dofile(L, "src/script.lua");
 
   // Initialise the camera
   Camera3D camera = { 0 };
