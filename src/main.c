@@ -35,21 +35,19 @@ void renderVoxel(struct Voxel voxel) {
       BLACK);
 }
 
-// int l_setVoxel(lua_State *L) {
-  // const float x = lua_tonumber(L, -3);
-  // const float y = lua_tonumber(L, -2);
-  // const float z = lua_tonumber(L, -1);
+int l_setVoxel(lua_State *L) {
+  const float x = lua_tonumber(L, -3);
+  const float y = lua_tonumber(L, -2);
+  const float z = lua_tonumber(L, -1);
   
-  // lua_getglobal(L, "_World");
-  // const struct World *world = lua_topointer(L, -1);
+  lua_getglobal(L, "_World");
+  struct World *world = lua_topointer(L, -1);
 
-  // const float voxelSizeHalf = voxelSize / 2.0;
-  // world->chunks[posToIndex((Vector3){0, 0, 0}, worldSize)]->voxels[posToIndex((Vector3){x, y, z}, chunkSize)].type = VOXEL_DIRT;
-  // DrawCube((Vector3){ x + voxelSizeHalf, y + voxelSizeHalf, z + voxelSizeHalf }, voxelSize, voxelSize, voxelSize, voxelColors[VOXEL_STONE]);
-  // DrawCubeWires((Vector3){ x + voxelSizeHalf, y + voxelSizeHalf, z + voxelSizeHalf }, voxelSize, voxelSize, voxelSize, BLACK);
+  worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_STONE;
 
-//   return 0;
-// }
+  return 0;
+}
+
 int main(void) {
   // Initialise the window
   InitWindow(scrWidth, scrHeight, "test");
