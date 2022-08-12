@@ -67,8 +67,13 @@ int main(void) {
   lua_setglobal(L, "_World");
 
   // Load C functions into Lua
+  lua_createtable(L, 0, 4);
+
+  lua_pushstring(L, "setVoxel");
   lua_pushcfunction(L, l_setVoxel);
-  lua_setglobal(L, "setVoxel");
+  lua_settable(L, -3);
+
+  lua_setglobal(L, "voxeng");
 
   // Do file
   luaL_dofile(L, "src/script.lua");
