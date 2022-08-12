@@ -29,10 +29,10 @@ void renderVoxel(struct Voxel voxel) {
       voxelSize, voxelSize, voxelSize,
       voxelColors[voxel.type]);
 
-  // DrawCubeWires(
-  //     voxel.position,
-  //     voxelSize, voxelSize, voxelSize,
-  //     BLACK);
+  DrawCubeWires(
+      voxel.position,
+      voxelSize, voxelSize, voxelSize,
+      BLACK);
 }
 
 // int l_setVoxel(lua_State *L) {
