@@ -43,7 +43,6 @@ int l_setVoxel(lua_State *L) {
   lua_getglobal(L, "_World");
   struct World *world = lua_touserdata(L, -1);
 
-  printf("heloo!!!!!!!!!!!!!!\n");
   worldPosToVoxel(world, 0, 0, 0, x, y, z)->type = VOXEL_UNDEFINED;
 
   return 0;
