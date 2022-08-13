@@ -15,8 +15,8 @@
 
 // Screen Dimensions
 // For some reason raylib bypasses i3 and makes the window floating regardless??
-const size_t scrWidth = 500;
-const size_t scrHeight = 500;
+const size_t scrWidth = 1000;
+const size_t scrHeight = 600;
 
 void renderVoxel(struct Game game, struct Voxel voxel) {
   if(voxel.id != 0) {
