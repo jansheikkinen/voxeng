@@ -5,8 +5,8 @@
 #include <math.h>
 #include <raylib.h>
 
-#include "voxel.h"
-#include "api.h"
+#include "voxel/voxel.h"
+#include "api/api.h"
 
 #include <dirent.h>
 
