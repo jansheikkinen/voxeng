@@ -137,8 +137,20 @@ void destroyGame(struct Game* game) {
 // WORLD LIST APPENDING
 
 void appendVoxelData(struct VoxelDataList* vdlist, struct VoxelData voxelData) {
-  // TODO: Handle when appending overflows vdlist capacity
-  vdlist->voxelData[vdlist->size++] = voxelData;
+  if(vdlist->size + 1 >= vdlist->capacity) {
+    vdlist->capacity *= 1.5;
+
+    struct VoxelData* newVdlist = calloc(vdlist->capacity, sizeof(struct VoxelData));
+
+    for(size_t i = 0; i < vdlist->size; i++) {
+      newVdlist[i] = vdlist->voxelData[i];
+    }
+
+    vdlist->voxelData = newVdlist;
+    vdlist->voxelData[vdlist->size++] = voxelData;
+  } else {
+    vdlist->voxelData[vdlist->size++] = voxelData;
+  }
 }
 
 void appendWorldList(struct WorldList* worldlist, struct World* world) {
