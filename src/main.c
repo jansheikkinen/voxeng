@@ -61,6 +61,16 @@ int main(void) {
     // Game logic
     UpdateCamera(&camera);
 
+    // Refresh game
+    if(IsKeyPressed(KEY_F1)) {
+      // Unload stored textures
+      for(size_t i = 0; i < game.voxelDataList.size; i++) {
+        UnloadTexture(game.voxelDataList.voxelData[i].texture);
+      }
+      game.voxelDataList.size = 1;
+
+      doLuaFiles(L);
+    }
 
     // Start rendering
     BeginDrawing();
