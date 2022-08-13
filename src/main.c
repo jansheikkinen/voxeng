@@ -43,7 +43,18 @@ int l_setVoxel(lua_State *L) {
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
-  worldVector3ToVoxel(game->worldlist.worlds[0], (Vector3){(int)(x)/chunkSize, (int)(y)/chunkSize, (int)(z)/chunkSize}, (Vector3){(int)(x)%chunkSize, (int)(y)%chunkSize, (int)(z)%chunkSize})->id = VOXEL_UNDEFINED;
+  worldVector3ToVoxel(
+    game->worldlist.worlds[0],
+    (Vector3) {
+      (int)x / chunkSize,
+      (int)y / chunkSize,
+      (int)z / chunkSize
+    },
+    (Vector3) {
+      (int)x % chunkSize,
+      (int)y % chunkSize,
+      (int)z % chunkSize
+    })->id = VOXEL_UNDEFINED;
 
   return 0;
 }
