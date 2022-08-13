@@ -16,6 +16,17 @@ enum VoxelType {
   VOXEL_STONE,
 };
 
+struct VoxelData {
+  const char* name;
+  const char* image;
+};
+
+struct VoxelDataList {
+  struct VoxelData* voxelData;
+  size_t capacity;
+  size_t size;
+};
+
 struct Voxel {
   Vector3 position;
   size_t id;
@@ -38,7 +49,7 @@ struct WorldList {
 
 struct Game {
   struct WorldList worldlist;
-  size_t* voxel_ids;
+  struct VoxelDataList voxelDataList;
 };
 
 struct Voxel* chunkPosToVoxel(struct Chunk*, int, int, int);
@@ -53,13 +64,16 @@ struct Voxel* worldVector3ToVoxel(struct World*, Vector3, Vector3);
 void initializeChunk(struct Chunk*, Vector3);
 void initializeWorld(struct World*);
 void initializeWorldList(struct WorldList*);
+void initializeVoxelDataList(struct VoxelDataList*);
 void initializeGame(struct Game*);
 
 void destroyChunk(struct Chunk*);
 void destroyWorld(struct World*);
 void destroyWorldList(struct WorldList*);
+void destroyVoxelDataList(struct VoxelDataList*);
 void destroyGame(struct Game*);
 
+void appendVoxelData(struct VoxelDataList*, struct VoxelData);
 void appendWorldList(struct WorldList*, struct World* world);
 
 #endif

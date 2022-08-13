@@ -92,8 +92,15 @@ void initializeWorldList(struct WorldList* worldlist) {
   worldlist->worlds = calloc(worldlist->capacity, sizeof(struct World*));
 }
 
+void initializeVoxelDataList(struct VoxelDataList* vdlist) {
+  vdlist->capacity = 4;
+  vdlist->size = 0;
+  vdlist->voxelData = calloc(vdlist->capacity, sizeof(struct VoxelData));
+}
+
 void initializeGame(struct Game* game) {
   initializeWorldList(&game->worldlist);
+  initializeVoxelDataList(&game->voxelDataList);
 }
 
 // DESTRUCTOR FUNCTIONS
@@ -112,6 +119,10 @@ void destroyWorld(struct World* world) {
   }
 }
 
+void destroyVoxelDataList(struct VoxelDataList* voxelDataList) {
+  free(voxelDataList->voxelData);
+}
+
 void destroyWorldList(struct WorldList* worldlist) {
   for(size_t i = 0; i < worldlist->size; i++) {
     destroyWorld(worldlist->worlds[i]);
@@ -123,6 +134,11 @@ void destroyGame(struct Game* game) {
 }
 
 // WORLD LIST APPENDING
+
+void appendVoxelData(struct VoxelDataList* vdlist, struct VoxelData voxelData) {
+  // TODO: Handle when appending overflows vdlist capacity
+  vdlist->voxelData[vdlist->size++] = voxelData;
+}
 
 void appendWorldList(struct WorldList* worldlist, struct World* world) {
   printf("%ld\n", (long)worldlist);

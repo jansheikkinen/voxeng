@@ -48,6 +48,18 @@ int l_setVoxel(lua_State *L) {
   return 0;
 }
 
+int l_regVoxel(lua_State *L) {
+  const char* name = lua_tostring(L, -2);
+  const char* texture = lua_tostring(L, -1);
+
+  lua_getglobal(L, "_game_data");
+  struct Game* game = lua_touserdata(L, -1);
+
+  appendVoxelData(&game->voxelDataList, (struct VoxelData){name, texture});
+
+  return 0;
+}
+
 int main(void) {
   // Initialise the window
   InitWindow(scrWidth, scrHeight, "test");
@@ -75,6 +87,10 @@ int main(void) {
 
   lua_pushstring(L, "setVoxel");
   lua_pushcfunction(L, l_setVoxel);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "regVoxel");
+  lua_pushcfunction(L, l_regVoxel);
   lua_settable(L, -3);
 
   lua_setglobal(L, "voxeng");
