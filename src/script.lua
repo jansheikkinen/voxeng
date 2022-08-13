@@ -1,1 +1,3 @@
-voxeng.setVoxel(6,6,0)
+voxeng.regVoxel("main:dirt", "texture.png")
+
+voxeng.setVoxel(0, 0, 0)

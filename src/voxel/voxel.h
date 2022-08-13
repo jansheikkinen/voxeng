@@ -18,7 +18,7 @@ enum VoxelType {
 
 struct VoxelData {
   const char* name;
-  const char* image;
+  Texture2D texture;
 };
 
 struct VoxelDataList {

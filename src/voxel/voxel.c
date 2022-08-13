@@ -61,7 +61,7 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
         float voxelSizeHalf = voxelSize / 2.0;
 
         struct Voxel* voxel = chunkPosToVoxel(chunk, x, y, z);
-        voxel->id = VOXEL_STONE;
+        voxel->id = 0;
         voxel->position = (Vector3){
           (chunkSize * position.x) + (x * voxelSize) + voxelSizeHalf,
           (chunkSize * position.y) + (y * voxelSize) + voxelSizeHalf,
@@ -96,6 +96,7 @@ void initializeVoxelDataList(struct VoxelDataList* vdlist) {
   vdlist->capacity = 4;
   vdlist->size = 0;
   vdlist->voxelData = calloc(vdlist->capacity, sizeof(struct VoxelData));
+  appendVoxelData(vdlist, (struct VoxelData){"null_voxel", (Texture2D){0}});
 }
 
 void initializeGame(struct Game* game) {

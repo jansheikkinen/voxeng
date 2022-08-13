@@ -23,16 +23,15 @@ const Color voxelColors[] = {
   { 120, 120, 120, 255 },
 };
 
-void renderVoxel(struct Voxel voxel) {
-  DrawCube(
+void renderVoxel(struct Game game, struct Voxel voxel) {
+  if(voxel.id != 0) {
+    DrawCubeTexture(
+      game.voxelDataList.voxelData[voxel.id].texture,
       voxel.position,
       voxelSize, voxelSize, voxelSize,
-      (Color){255, 255, 255, 255});
-
-  DrawCubeWires(
-      voxel.position,
-      voxelSize, voxelSize, voxelSize,
-      BLACK);
+      (Color){255, 255, 255, 255}
+    );
+  }
 }
 
 int l_setVoxel(lua_State *L) {
@@ -54,7 +53,7 @@ int l_setVoxel(lua_State *L) {
       (int)x % chunkSize,
       (int)y % chunkSize,
       (int)z % chunkSize
-    })->id = VOXEL_UNDEFINED;
+    })->id = 1;
 
   return 0;
 }
@@ -66,7 +65,8 @@ int l_regVoxel(lua_State *L) {
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
-  appendVoxelData(&game->voxelDataList, (struct VoxelData){name, texture});
+  appendVoxelData(&game->voxelDataList, (struct VoxelData){name, LoadTexture(texture)});
+  printf("%s\n", game->voxelDataList.voxelData[1].name);
 
   return 0;
 }
@@ -136,7 +136,7 @@ int main(void) {
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
       for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        renderVoxel(game.worldlist.worlds[0]->chunks[i]->voxels[j]);
+        renderVoxel(game, game.worldlist.worlds[0]->chunks[i]->voxels[j]);
       }
     }
 
