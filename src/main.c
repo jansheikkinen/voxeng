@@ -18,13 +18,6 @@
 const size_t scrWidth = 500;
 const size_t scrHeight = 500;
 
-// Placehold voxel colours
-const Color voxelColors[] = {
-  {   0,   0,   0,   0 },
-  { 140,  80,  30, 255 },
-  { 120, 120, 120, 255 },
-};
-
 void renderVoxel(struct Game game, struct Voxel voxel) {
   if(voxel.id != 0) {
     DrawCubeTexture(
