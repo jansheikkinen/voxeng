@@ -68,7 +68,9 @@ int l_regVoxel(lua_State *L) {
   appendVoxelData(&game->voxelDataList, (struct VoxelData){name, LoadTexture(texture)});
   printf("%s\n", game->voxelDataList.voxelData[1].name);
 
-  return 0;
+  lua_pushinteger(L, game->voxelDataList.size - 1);
+
+  return 1;
 }
 
 int main(void) {
