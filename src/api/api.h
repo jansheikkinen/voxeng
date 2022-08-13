@@ -9,7 +9,7 @@
 
 #include <dirent.h>
 
-void initializeLua(struct Game);
+lua_State* initializeLua(struct Game*);
 
 void doLuaFiles(lua_State*);
 

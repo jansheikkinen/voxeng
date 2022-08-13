@@ -54,7 +54,7 @@ int l_regVoxel(lua_State* L) {
 }
 
 
-void initializeLua(struct Game game) {
+lua_State* initializeLua(struct Game* game) {
   // Initialize Lua state
   lua_State* L = luaL_newstate();
 
@@ -62,7 +62,7 @@ void initializeLua(struct Game game) {
   luaL_openlibs(L); 
 
   // Load world global into Lua
-  lua_pushlightuserdata(L, &game);
+  lua_pushlightuserdata(L, game);
   lua_setglobal(L, "_game_data");
 
   // Load C functions into Lua
@@ -77,9 +77,9 @@ void initializeLua(struct Game game) {
   lua_settable(L, -3);
 
   lua_setglobal(L, "voxeng");
-  printf("initializeLua Capacity Read: %li\n", game.voxelDataList.capacity);
+  printf("initializeLua Capacity Read: %li\n", game->voxelDataList.capacity);
 
-  doLuaFiles(L);
+  return L;
 }
 
 void doLuaFiles(lua_State* L) {

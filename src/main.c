@@ -41,7 +41,9 @@ int main(void) {
   appendWorldList(&game.worldlist, &world);
 
   // Initialize Lua state
-  initializeLua(game);
+  lua_State* L = initializeLua(&game);
+
+  doLuaFiles(L);
 
   // Initialise the camera
   Camera3D camera = { 0 };
