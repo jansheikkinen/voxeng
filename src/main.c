@@ -11,6 +11,8 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include <dirent.h>
+
 // Screen Dimensions
 // For some reason raylib bypasses i3 and makes the window floating regardless??
 const size_t scrWidth = 500;
@@ -109,7 +111,33 @@ int main(void) {
   lua_setglobal(L, "voxeng");
 
   // Do file
-  luaL_dofile(L, "src/script.lua");
+  // luaL_dofile(L, "build/mods/script.lua");
+
+  struct dirent* entry;
+  DIR* dp = opendir(modDir);
+
+  if(dp != NULL) {
+    readdir(dp); // Skip directories . and ..
+    readdir(dp);
+    while((entry = readdir(dp)) != NULL) {
+      char s1[50] = modDir;
+      char s3[] = "/main.lua";
+
+      size_t length = 0;
+      while(s1[length] != '\0') {
+        length++;
+      }
+      for (size_t i = 0; entry->d_name[i] != '\0'; i++, length++) {
+        s1[length] = entry->d_name[i];
+      }
+      for (size_t i = 0; s3[i] != '\0'; i++, length++) {
+        s1[length] = s3[i];
+      }
+      s1[length] = '\0';
+      luaL_dofile(L, s1);
+    }
+    closedir(dp);
+  }
 
   // Initialise the camera
   Camera3D camera = { 0 };

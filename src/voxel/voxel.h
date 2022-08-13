@@ -10,6 +10,8 @@
 #define chunkSize 4
 #define worldSize 2
 
+#define modDir "build/mods/"
+
 enum VoxelType {
   VOXEL_VOID,
   VOXEL_UNDEFINED,
