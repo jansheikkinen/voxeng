@@ -30,9 +30,10 @@ void renderVoxel(struct Game game, struct Voxel voxel) {
 }
 
 int l_setVoxel(lua_State *L) {
-  const float x = lua_tonumber(L, -3);
-  const float y = lua_tonumber(L, -2);
-  const float z = lua_tonumber(L, -1);
+  const float x = lua_tonumber(L, -4);
+  const float y = lua_tonumber(L, -3);
+  const float z = lua_tonumber(L, -2);
+  const size_t id = lua_tonumber(L, -1);
   
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
@@ -48,7 +49,7 @@ int l_setVoxel(lua_State *L) {
       (int)x % chunkSize,
       (int)y % chunkSize,
       (int)z % chunkSize
-    })->id = 1;
+    })->id = id;
 
   return 0;
 }
