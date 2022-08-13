@@ -70,7 +70,9 @@ int l_regVoxel(lua_State *L) {
 
 int main(void) {
   // Initialise the window
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(scrWidth, scrHeight, "test");
+  MaximizeWindow();
 
   struct Game game = { 0 };
   initializeGame(&game);
