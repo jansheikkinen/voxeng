@@ -22,4 +22,4 @@ voxeng: $(OBJ)
 	$(CC) $< $(CFLAGS) $(INCLUDE) $(LIBS) -o $@ -c
 
 clean:
-	rm -Rf $(BUILD)/* $(OBJ)
+	rm -Rf $(BUILD)/voxeng $(OBJ)
