@@ -20,7 +20,11 @@ void renderChunk(struct Game game, struct Chunk* chunk) {
     if(chunk->voxels[i].id == 0) continue;
     DrawCubeTexture(
       game.voxelDataList.voxelData[chunk->voxels[i].id].texture,
-      chunk->voxels[i].position,
+      (Vector3){
+        chunk->voxels[i].position.x - offset,
+        chunk->voxels[i].position.y,
+        chunk->voxels[i].position.z - offset
+      },
       voxelSize, voxelSize, voxelSize,
       (Color){255, 255, 255, 255}
     );
