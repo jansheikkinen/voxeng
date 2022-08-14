@@ -1,10 +1,10 @@
 /* main.c */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #include <math.h>
 #include <raylib.h>
+
 
 // Screen Dimensions
 // For some reason raylib bypasses i3 and makes the window floating regardless??
@@ -91,38 +91,42 @@ void destroyChunk(struct Chunk* chunk) {
   free(chunk->voxels);
 }
 
-void destroyWorld(struct World* world) {
-  for(size_t z = 0; z < worldSize; z++) {
-    for(size_t y = 0; y < worldSize; y++) {
-      for(size_t x = 0; x < worldSize; x++) {
-        destroyChunk(world->chunks[posToIndex(
-              (Vector3){ x, y, z },
-              worldSize)]);
-      }
-    }
+#include <dirent.h>
+
+// Screen Dimensions
+// For some reason raylib bypasses i3 and makes the window floating regardless??
+const size_t scrWidth = 1000;
+const size_t scrHeight = 600;
+
+void renderVoxel(struct Game game, struct Voxel voxel) {
+  if(voxel.id != 0) {
+    DrawCubeTexture(
+      game.voxelDataList.voxelData[voxel.id].texture,
+      voxel.position,
+      voxelSize, voxelSize, voxelSize,
+      (Color){255, 255, 255, 255}
+    );
   }
 }
 
-void renderVoxel(struct Voxel voxel) {
-  DrawCubeTexture(
-      voxel.texture,
-      voxel.position,
-      voxelSize, voxelSize, voxelSize,
-      (Color){255, 255, 255, 255});
-
-  // DrawCubeWires(
-  //     voxel.position,
-  //     voxelSize, voxelSize, voxelSize,
-  //     BLACK);
-}
-
-
 int main(void) {
   // Initialise the window
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(scrWidth, scrHeight, "test");
-  
+  MaximizeWindow();
+
+  struct Game game = { 0 };
+  initializeGame(&game);
+
   struct World world = { 0 };
   initializeWorld(&world);
+
+  appendWorldList(&game.worldlist, &world);
+
+  // Initialize Lua state
+  lua_State* L = initializeLua(&game);
+
+  doLuaFiles(L);
 
   // Initialise the camera
   Camera3D camera = { 0 };
@@ -135,11 +139,22 @@ int main(void) {
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
 
+  printf("test\n\n");
   // Game loop
   while(!WindowShouldClose()) {
     // Game logic
     UpdateCamera(&camera);
 
+    // Refresh game
+    if(IsKeyPressed(KEY_F1)) {
+      // Unload stored textures
+      for(size_t i = 0; i < game.voxelDataList.size; i++) {
+        UnloadTexture(game.voxelDataList.voxelData[i].texture);
+      }
+      game.voxelDataList.size = 1;
+
+      doLuaFiles(L);
+    }
 
     // Start rendering
     BeginDrawing();
@@ -151,12 +166,12 @@ int main(void) {
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
       for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        renderVoxel(world.chunks[i]->voxels[j]);
+        renderVoxel(game, game.worldlist.worlds[0]->chunks[i]->voxels[j]);
       }
     }
 
     // Draw grids to show voxel, chunk, and world sizes
-    DrawGrid(2 * chunkSize * voxelSize, voxelSize);
+    // DrawGrid(2 * chunkSize * voxelSize, voxelSize);
     DrawGrid(worldSize * chunkSize, chunkSize);
 
     EndMode3D();
@@ -171,6 +186,6 @@ int main(void) {
   // Actually close the window
   CloseWindow();
 
-  destroyWorld(&world);
+  destroyGame(&game);
   return 0;
 }

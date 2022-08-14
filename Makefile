@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -pedantic -std=c17
 INCLUDE = -Iinclude
 LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -llua
 
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard src/*.c) $(wildcard src/**/*.c)
 OBJ = $(SRC:.c=.o)
 BUILD = build
 
@@ -22,4 +22,4 @@ voxeng: $(OBJ)
 	$(CC) $< $(CFLAGS) $(INCLUDE) $(LIBS) -o $@ -c
 
 clean:
-	rm -Rf $(BUILD)/* $(OBJ)
+	rm -Rf $(BUILD)/voxeng $(OBJ)
