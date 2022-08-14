@@ -60,7 +60,6 @@ void initializeChunk(struct Chunk* chunk, Vector3 position) {
       for(size_t x = 0; x < chunkSize; x++) {
         float voxelSizeHalf = voxelSize / 2.0;
 
-        printf("test ");
         struct Voxel* voxel = chunkPosToVoxel(chunk, x, y, z);
         voxel->id = 0;
         voxel->position = (Vector3){
@@ -155,8 +154,6 @@ void appendVoxelData(struct VoxelDataList* vdlist, struct VoxelData voxelData) {
 }
 
 void appendWorldList(struct WorldList* worldlist, struct World* world) {
-  printf("%ld\n", (long)worldlist);
-
   if(worldlist->size + 1 >= worldlist->capacity) {
     worldlist->capacity *= 1.5;
     
@@ -170,7 +167,5 @@ void appendWorldList(struct WorldList* worldlist, struct World* world) {
     worldlist->worlds[worldlist->size++] = world;
   } else {
     worldlist->worlds[worldlist->size++] = world;
-    printf("%ld\n", (long)worldlist->worlds[worldlist->size - 1]);
-    printf("%ld\n", (long)worldlist->worlds[worldlist->size]);
   }
 }

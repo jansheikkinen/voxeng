@@ -44,9 +44,7 @@ int l_regVoxel(lua_State* L) {
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
-  printf("regVoxel Capacity Read: %li\n", game->voxelDataList.capacity);
   appendVoxelData(&game->voxelDataList, (struct VoxelData){name, LoadTexture(texture)});
-  printf("%s\n", game->voxelDataList.voxelData[1].name);
 
   lua_pushinteger(L, game->voxelDataList.size - 1);
 
@@ -77,7 +75,6 @@ lua_State* initializeLua(struct Game* game) {
   lua_settable(L, -3);
 
   lua_setglobal(L, "voxeng");
-  printf("initializeLua Capacity Read: %li\n", game->voxelDataList.capacity);
 
   return L;
 }

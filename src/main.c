@@ -15,13 +15,21 @@
 const size_t scrWidth = 1000;
 const size_t scrHeight = 600;
 
-void renderVoxel(struct Game game, struct Voxel voxel) {
-  if(voxel.id != 0) {
+void renderChunk(struct Game game, struct Chunk* chunk) {
+  const size_t offset = worldSize * chunkSize * voxelSize;
+  const Color color = (Color){255, 255, 255, 255};
+  const size_t lim = pow(chunkSize, 3);
+  for(size_t i = 0; i < lim; i++) {
+    if(chunk->voxels[i].id == 0) continue;
     DrawCubeTexture(
-      game.voxelDataList.voxelData[voxel.id].texture,
-      voxel.position,
+      game.voxelDataList.voxelData[chunk->voxels[i].id].texture,
+      (Vector3){
+        chunk->voxels[i].position.x - offset,
+        chunk->voxels[i].position.y,
+        chunk->voxels[i].position.z - offset
+      },
       voxelSize, voxelSize, voxelSize,
-      (Color){255, 255, 255, 255}
+      color
     );
   }
 }
@@ -56,7 +64,6 @@ int main(void) {
   // You can pan with middle mouse
   // and rotate by holding alt and doing middle mouse
 
-  printf("test\n\n");
   // Game loop
   while(!WindowShouldClose()) {
     // Game logic
@@ -82,14 +89,12 @@ int main(void) {
 
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
-      for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        renderVoxel(game, game.worldlist.worlds[0]->chunks[i]->voxels[j]);
-      }
+      renderChunk(game, game.worldlist.worlds[0]->chunks[i]);
     }
 
     // Draw grids to show voxel, chunk, and world sizes
     // DrawGrid(2 * chunkSize * voxelSize, voxelSize);
-    DrawGrid(worldSize * chunkSize, chunkSize);
+    DrawGrid(worldSize * chunkSize / 2, chunkSize);
 
     EndMode3D();
 
