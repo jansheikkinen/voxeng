@@ -16,7 +16,10 @@ const size_t scrWidth = 1000;
 const size_t scrHeight = 600;
 
 void renderChunk(struct Game game, struct Chunk* chunk) {
-  for(size_t i = 0; i < pow(chunkSize, 3); i++) {
+  const size_t offset = worldSize * chunkSize * voxelSize;
+  const Color color = (Color){255, 255, 255, 255};
+  const size_t lim = pow(chunkSize, 3);
+  for(size_t i = 0; i < lim; i++) {
     if(chunk->voxels[i].id == 0) continue;
     DrawCubeTexture(
       game.voxelDataList.voxelData[chunk->voxels[i].id].texture,
@@ -26,7 +29,7 @@ void renderChunk(struct Game game, struct Chunk* chunk) {
         chunk->voxels[i].position.z - offset
       },
       voxelSize, voxelSize, voxelSize,
-      (Color){255, 255, 255, 255}
+      color
     );
   }
 }
