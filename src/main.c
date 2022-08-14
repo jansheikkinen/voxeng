@@ -94,7 +94,7 @@ int main(void) {
 
     // Draw grids to show voxel, chunk, and world sizes
     // DrawGrid(2 * chunkSize * voxelSize, voxelSize);
-    DrawGrid(worldSize * chunkSize, chunkSize);
+    DrawGrid(worldSize * chunkSize / 2, chunkSize);
 
     EndMode3D();
 
