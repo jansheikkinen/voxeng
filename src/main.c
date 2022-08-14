@@ -15,13 +15,16 @@
 const size_t scrWidth = 1000;
 const size_t scrHeight = 600;
 
-void renderVoxel(struct Game game, struct Voxel voxel) {
-  DrawCubeTexture(
-    game.voxelDataList.voxelData[voxel.id].texture,
-    voxel.position,
-    voxelSize, voxelSize, voxelSize,
-    (Color){255, 255, 255, 255}
-  );
+void renderChunk(struct Game game, struct Chunk* chunk) {
+  for(size_t i = 0; i < pow(chunkSize, 3); i++) {
+    if(chunk->voxels[i].id == 0) continue;
+    DrawCubeTexture(
+      game.voxelDataList.voxelData[chunk->voxels[i].id].texture,
+      chunk->voxels[i].position,
+      voxelSize, voxelSize, voxelSize,
+      (Color){255, 255, 255, 255}
+    );
+  }
 }
 
 int main(void) {
@@ -79,11 +82,7 @@ int main(void) {
 
     // Render the world
     for(size_t i = 0; i < pow(worldSize, 3); i++) {
-      for(size_t j = 0; j < pow(chunkSize, 3); j++) {
-        if(game.worldlist.worlds[0]->chunks[i]->voxels[j].id != 0) {
-          renderVoxel(game, game.worldlist.worlds[0]->chunks[i]->voxels[j]);
-        }
-      }
+      renderChunk(game, game.worldlist.worlds[0]->chunks[i]);
     }
 
     // Draw grids to show voxel, chunk, and world sizes
