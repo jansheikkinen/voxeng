@@ -12,12 +12,6 @@
 
 #define modDir "build/mods/"
 
-enum VoxelType {
-  VOXEL_VOID,
-  VOXEL_UNDEFINED,
-  VOXEL_STONE,
-};
-
 struct VoxelData {
   const char* name;
   Texture2D texture;
