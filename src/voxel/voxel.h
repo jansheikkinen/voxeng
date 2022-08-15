@@ -59,6 +59,7 @@ struct WorldList {
 struct Game {
   struct WorldList worldlist;
   struct VoxelDataList voxelDataList;
+  struct ChunkMesh mesh;
 };
 
 struct Voxel* chunkPosToVoxel(struct Chunk*, int, int, int);
