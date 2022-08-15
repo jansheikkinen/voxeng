@@ -45,6 +45,7 @@ struct Voxel {
 struct Chunk {
   Vector3 position;
   struct Voxel* voxels;
+  struct ChunkMesh* mesh;
 };
 
 struct World {
