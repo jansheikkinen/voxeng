@@ -108,6 +108,7 @@ void initializeMesh(struct ChunkMesh* mesh) {
 void initializeGame(struct Game* game) {
   initializeWorldList(&game->worldlist);
   initializeVoxelDataList(&game->voxelDataList);
+  initializeMesh(&game->mesh);
 }
 
 // DESTRUCTOR FUNCTIONS
