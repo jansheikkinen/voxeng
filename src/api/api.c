@@ -17,16 +17,16 @@ int l_setVoxel(lua_State* L) {
   const float y = lua_tonumber(L, -3);
   const float z = lua_tonumber(L, -2);
   const size_t id = lua_tonumber(L, -1);
-  
+
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
   worldVector3ToVoxel(
     game->worldlist.worlds[0],
     (Vector3) {
-      (int)x / chunkSize,
-      (int)y / chunkSize,
-      (int)z / chunkSize
+      (int)(x / chunkSize),
+      (int)(y / chunkSize),
+      (int)(z / chunkSize)
     },
     (Vector3) {
       (int)x % chunkSize,
@@ -57,7 +57,7 @@ lua_State* initializeLua(struct Game* game) {
   lua_State* L = luaL_newstate();
 
   // Load Lua libraries
-  luaL_openlibs(L); 
+  luaL_openlibs(L);
 
   // Load world global into Lua
   lua_pushlightuserdata(L, game);
@@ -84,11 +84,12 @@ void doLuaFiles(lua_State* L) {
   DIR* dp = opendir(modDir);
 
   if(dp != NULL) {
-    readdir(dp); // Skip directories . and ..
-    readdir(dp);
-    while((entry = readdir(dp)) != NULL) {
+    do {
+      entry = readdir(dp);
+      if(!entry || entry->d_name[0] == '.') continue;
+
       char s1[50] = modDir;
-      char s3[] = "/main.lua";
+      const char* s3 = "/main.lua";
 
       size_t length = 0;
       while(s1[length] != '\0') {
@@ -102,7 +103,8 @@ void doLuaFiles(lua_State* L) {
       }
       s1[length] = '\0';
       luaL_dofile(L, s1);
-    }
+    } while(entry);
+
     closedir(dp);
   }
 }
