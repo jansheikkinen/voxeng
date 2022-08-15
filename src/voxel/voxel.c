@@ -191,7 +191,7 @@ void appendMeshFace(struct ChunkMesh* mesh, struct MeshFace face) {
   if(mesh->size + 1 >= mesh->capacity) {
     mesh->capacity *= 1.5;
     
-    struct MeshFace* newMesh = calloc(mesh->capacity, sizeof(struct World*));
+    struct MeshFace* newMesh = calloc(mesh->capacity, sizeof(struct MeshFace));
     
     for(size_t i = 0; i < mesh->size; i++) {
       newMesh[i] = mesh->meshFaces[i];
