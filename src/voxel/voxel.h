@@ -76,15 +76,18 @@ void initializeChunk(struct Chunk*, Vector3);
 void initializeWorld(struct World*);
 void initializeWorldList(struct WorldList*);
 void initializeVoxelDataList(struct VoxelDataList*);
+void initializeMesh(struct ChunkMesh*);
 void initializeGame(struct Game*);
 
 void destroyChunk(struct Chunk*);
 void destroyWorld(struct World*);
 void destroyWorldList(struct WorldList*);
 void destroyVoxelDataList(struct VoxelDataList*);
+void destroyMesh(struct ChunkMesh*);
 void destroyGame(struct Game*);
 
 void appendVoxelData(struct VoxelDataList*, struct VoxelData);
 void appendWorldList(struct WorldList*, struct World* world);
+void appendMeshFace(struct ChunkMesh*, struct MeshFace);
 
 #endif
