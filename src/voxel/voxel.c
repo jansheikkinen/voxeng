@@ -141,6 +141,8 @@ void destroyWorldList(struct WorldList* worldlist) {
 }
 
 void destroyGame(struct Game* game) {
+  destroyVoxelDataList(&game->voxelDataList);
+  destroyMesh(&game->mesh);
   destroyWorldList(&game->worldlist);
 }
 
