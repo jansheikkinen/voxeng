@@ -12,6 +12,19 @@
 
 #define modDir "build/mods/"
 
+struct MeshFace {
+  size_t x;
+  size_t y;
+  size_t z;
+  int8_t face;
+};
+
+struct ChunkMesh {
+  struct MeshFace* meshFaces;
+  size_t capacity;
+  size_t size;
+};
+
 struct VoxelData {
   const char* name;
   Texture2D texture;
