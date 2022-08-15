@@ -99,6 +99,12 @@ void initializeVoxelDataList(struct VoxelDataList* vdlist) {
   appendVoxelData(vdlist, (struct VoxelData){"null_voxel", (Texture2D){0}});
 }
 
+void initializeMesh(struct ChunkMesh* mesh) {
+  mesh->capacity = chunkSize; // chunkSize is arbitrary, but scales okay-ish
+  mesh->size = 0;
+  mesh->meshFaces = calloc(mesh->capacity, sizeof(struct MeshFace));
+}
+
 void initializeGame(struct Game* game) {
   initializeWorldList(&game->worldlist);
   initializeVoxelDataList(&game->voxelDataList);
@@ -122,6 +128,10 @@ void destroyWorld(struct World* world) {
 
 void destroyVoxelDataList(struct VoxelDataList* voxelDataList) {
   free(voxelDataList->voxelData);
+}
+
+void destroyMesh(struct ChunkMesh* mesh) {
+  free(mesh->meshFaces);
 }
 
 void destroyWorldList(struct WorldList* worldlist) {
@@ -167,5 +177,22 @@ void appendWorldList(struct WorldList* worldlist, struct World* world) {
     worldlist->worlds[worldlist->size++] = world;
   } else {
     worldlist->worlds[worldlist->size++] = world;
+  }
+}
+
+void appendMeshFace(struct ChunkMesh* mesh, struct MeshFace face) {
+  if(mesh->size + 1 >= mesh->capacity) {
+    mesh->capacity *= 1.5;
+    
+    struct MeshFace* newMesh = calloc(mesh->capacity, sizeof(struct World*));
+    
+    for(size_t i = 0; i < mesh->size; i++) {
+      newMesh[i] = mesh->meshFaces[i];
+    }
+    
+    mesh->meshFaces = newMesh;
+    mesh->meshFaces[mesh->size++] = face;
+  } else {
+    mesh->meshFaces[mesh->size++] = face;
   }
 }
