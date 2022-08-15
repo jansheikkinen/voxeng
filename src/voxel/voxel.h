@@ -2,6 +2,7 @@
 #define VOXEL_H
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #include <math.h>
 #include <raylib.h>
@@ -16,7 +17,7 @@ struct MeshFace {
   size_t x;
   size_t y;
   size_t z;
-  int8_t face;
+  uint8_t face;
 };
 
 struct ChunkMesh {
