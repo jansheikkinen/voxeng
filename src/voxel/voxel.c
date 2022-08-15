@@ -159,6 +159,8 @@ void appendVoxelData(struct VoxelDataList* vdlist, struct VoxelData voxelData) {
       newVdlist[i] = vdlist->voxelData[i];
     }
 
+    free(vdlist->voxelData);
+
     vdlist->voxelData = newVdlist;
     vdlist->voxelData[vdlist->size++] = voxelData;
   } else {
@@ -175,6 +177,8 @@ void appendWorldList(struct WorldList* worldlist, struct World* world) {
     for(size_t i = 0; i < worldlist->size; i++) {
       newWorldlist[i] = worldlist->worlds[i];
     }
+
+    free(worldlist->worlds);
     
     worldlist->worlds = newWorldlist;
     worldlist->worlds[worldlist->size++] = world;
@@ -192,6 +196,8 @@ void appendMeshFace(struct ChunkMesh* mesh, struct MeshFace face) {
     for(size_t i = 0; i < mesh->size; i++) {
       newMesh[i] = mesh->meshFaces[i];
     }
+
+    free(mesh->meshFaces);
     
     mesh->meshFaces = newMesh;
     mesh->meshFaces[mesh->size++] = face;
