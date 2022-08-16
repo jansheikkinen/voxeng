@@ -16,75 +16,6 @@
 const size_t scrWidth = 1000;
 const size_t scrHeight = 600;
 
-struct Voxel* getAdjacentVoxel(
-  struct Game game, struct Voxel voxel,
-  int xOffset, int yOffset, int zOffset
-) {
-  return worldVector3ToVoxel(
-    game.worldlist.worlds[0],
-    (Vector3) {
-      ((int)voxel.position.x + xOffset) / chunkSize,
-      ((int)voxel.position.y + yOffset) / chunkSize,
-      ((int)voxel.position.z + zOffset) / chunkSize
-    },
-    (Vector3) {
-      ((int)voxel.position.x + xOffset) % chunkSize,
-      ((int)voxel.position.y + yOffset) % chunkSize,
-      ((int)voxel.position.z + zOffset) % chunkSize
-    }
-  );
-}
-
-void checkMeshFace(
-  struct Game game, struct Chunk* chunk, struct Voxel voxel,
-  int xOffset, int yOffset, int zOffset, uint8_t side
-) {
-  if(getAdjacentVoxel(game, voxel, xOffset, yOffset, zOffset)->id != 0) {
-    appendMeshFace(chunk->mesh, (struct MeshFace){
-      voxel.position.x, voxel.position.y, voxel.position.z, side
-    });
-  }
-}
-
-void reloadChunkMesh(struct Game game, struct Chunk* chunk) {
-  game.mesh.size = 0;
-  for(size_t i = 0; i < chunkSize; i++) {
-    if(chunk->voxels[i].id == 0) continue;
-    struct Voxel voxel = chunk->voxels[i];
-    // Check if voxel in front has an id of zero
-    checkMeshFace(game, chunk, voxel, 0,  0,  1, 0);
-    // Check if voxel behind   has an id of zero
-    checkMeshFace(game, chunk, voxel, 0,  0, -1, 1);
-    // Check if voxel above    has an id of zero
-    checkMeshFace(game, chunk, voxel, 0,  1,  0, 2);
-    // Check if voxel below    has an id of zero
-    checkMeshFace(game, chunk, voxel, 0, -1,  0, 3);
-    // Check if voxel to right has an id of zero
-    checkMeshFace(game, chunk, voxel, 1,  0,  0, 4);
-    // Check if voxel to left  has an id of zero
-    checkMeshFace(game, chunk, voxel, -1, 0,  0, 5);
-  }
-}
-
-void renderChunk(struct Game game, struct Chunk* chunk) {
-  const size_t offset = worldSize * chunkSize * voxelSize;
-  const Color color = (Color){255, 255, 255, 255};
-  const size_t lim = pow(chunkSize, 3);
-  for(size_t i = 0; i < lim; i++) {
-    if(chunk->voxels[i].id == 0) continue;
-    DrawCubeTexture(
-      game.voxelDataList.voxelData[chunk->voxels[i].id].texture,
-      (Vector3){
-        chunk->voxels[i].position.x - offset,
-        chunk->voxels[i].position.y,
-        chunk->voxels[i].position.z - offset
-      },
-      voxelSize, voxelSize, voxelSize,
-      color
-    );
-  }
-}
-
 void renderFront(float x, float y, float z) {
   rlNormal3f(0.0f, 0.0f, 1.0f);
   rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - 0.5f, y - 0.5f, z + 0.5f);  // Bottom Left Of The Texture and Quad
@@ -163,14 +94,6 @@ int main(void) {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(scrWidth, scrHeight, "test");
   MaximizeWindow();
-
-  struct Game game = { 0 };
-  initializeGame(&game);
-
-  struct World world = { 0 };
-  initializeWorld(&world);
-
-  appendWorldList(&game.worldlist, &world);
 
   // Initialize Lua state
   lua_State* L = initializeLua(&game);

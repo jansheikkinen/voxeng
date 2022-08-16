@@ -21,18 +21,18 @@ int l_setVoxel(lua_State* L) {
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
-  worldVector3ToVoxel(
-    game->worldlist.worlds[0],
-    (Vector3) {
-      (int)x / chunkSize,
-      (int)y / chunkSize,
-      (int)z / chunkSize
-    },
-    (Vector3) {
-      (int)x % chunkSize,
-      (int)y % chunkSize,
-      (int)z % chunkSize
-    })->id = id;
+  // worldVector3ToVoxel(
+  //   game->worldlist.worlds[0],
+  //   (Vector3) {
+  //     (int)x / chunkSize,
+  //     (int)y / chunkSize,
+  //     (int)z / chunkSize
+  //   },
+  //   (Vector3) {
+  //     (int)x % chunkSize,
+  //     (int)y % chunkSize,
+  //     (int)z % chunkSize
+  //   })->id = id;
 
   return 0;
 }
@@ -44,9 +44,9 @@ int l_regVoxel(lua_State* L) {
   lua_getglobal(L, "_game_data");
   struct Game* game = lua_touserdata(L, -1);
 
-  appendVoxelData(&game->voxelDataList, (struct VoxelData){name, LoadTexture(texture)});
+  // appendVoxelData(&game->voxelDataList, (struct VoxelData){name, LoadTexture(texture)});
 
-  lua_pushinteger(L, game->voxelDataList.size - 1);
+  // lua_pushinteger(L, game->voxelDataList.size - 1);
 
   return 1;
 }
@@ -81,28 +81,28 @@ lua_State* initializeLua(struct Game* game) {
 
 void doLuaFiles(lua_State* L) {
   struct dirent* entry;
-  DIR* dp = opendir(modDir);
+  // DIR* dp = opendir(modDir);
 
-  if(dp != NULL) {
-    readdir(dp); // Skip directories . and ..
-    readdir(dp);
-    while((entry = readdir(dp)) != NULL) {
-      char s1[50] = modDir;
-      char s3[] = "/main.lua";
+  // if(dp != NULL) {
+  //   readdir(dp); // Skip directories . and ..
+  //   readdir(dp);
+  //   while((entry = readdir(dp)) != NULL) {
+  //     char s1[50] = modDir;
+  //     char s3[] = "/main.lua";
 
-      size_t length = 0;
-      while(s1[length] != '\0') {
-        length++;
-      }
-      for (size_t i = 0; entry->d_name[i] != '\0'; i++, length++) {
-        s1[length] = entry->d_name[i];
-      }
-      for (size_t i = 0; s3[i] != '\0'; i++, length++) {
-        s1[length] = s3[i];
-      }
-      s1[length] = '\0';
-      luaL_dofile(L, s1);
-    }
-    closedir(dp);
-  }
+  //     size_t length = 0;
+  //     while(s1[length] != '\0') {
+  //       length++;
+  //     }
+  //     for (size_t i = 0; entry->d_name[i] != '\0'; i++, length++) {
+  //       s1[length] = entry->d_name[i];
+  //     }
+  //     for (size_t i = 0; s3[i] != '\0'; i++, length++) {
+  //       s1[length] = s3[i];
+  //     }
+  //     s1[length] = '\0';
+  //     luaL_dofile(L, s1);
+  //   }
+  //   closedir(dp);
+  // }
 }
