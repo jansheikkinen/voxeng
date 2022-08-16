@@ -8,7 +8,7 @@
 
 #include "../voxel/voxel.h"
 
-struct Game {
+struct GameData {
   struct Chunk** loadedChunks;
   size_t chunkListCap;
   size_t chunkListSize;
@@ -22,8 +22,11 @@ struct Game {
   struct {
     size_t renderDistance;
     size_t chunkSize;
-    char* modDirectory;
+    const char* modDirectory;
   } settings;
 };
+
+void initializeGameData(struct GameData*, size_t, size_t, const char*);
+void destroyGameData(struct GameData*);
 
 #endif

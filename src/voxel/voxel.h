@@ -16,4 +16,6 @@ struct VoxelType {
   size_t textureID;
 };
 
+void destroyChunk(struct Chunk*);
+
 #endif

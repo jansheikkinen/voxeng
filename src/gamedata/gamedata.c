@@ -14,8 +14,8 @@ size_t uintPow(size_t base, size_t exponent) {
   return n;
 }
 
-void initializeGame(
-  struct Game* game, const size_t renderDistance,
+void initializeGameData(
+  struct GameData* game, const size_t renderDistance,
   const size_t chunkSize, const char* modDirectory
 ) {
   game->settings.renderDistance = renderDistance;
@@ -31,4 +31,15 @@ void initializeGame(
 
   game->textureListSize = 1;
   game->textures = calloc(1, sizeof(Texture2D));
+}
+
+void destroyGameData(struct GameData* game) {
+  free(game->voxelTypes);
+  free(game->textures);
+
+  for(size_t i = 0; i < game->chunkListCap; i++) {
+    destroyChunk(game->loadedChunks[i]);
+  }
+
+  free(game);
 }
