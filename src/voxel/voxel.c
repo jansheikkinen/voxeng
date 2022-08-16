@@ -18,8 +18,13 @@ size_t uintPow(size_t base, size_t exponent) {
   return n;
 }
 
-void initializeGame(struct Game* game, const size_t renderDistance) {
+void initializeGame(
+  struct Game* game, const size_t renderDistance,
+  const size_t chunkSize, const char* modDirectory
+) {
   game->settings.renderDistance = renderDistance;
+  game->settings.chunkSize = chunkSize;
+  game->settings.modDirectory = modDirectory;
 
   game->chunkListSize = 0;
   game->chunkListCap = uintPow(renderDistance, 3);
