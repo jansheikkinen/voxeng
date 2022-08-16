@@ -7,62 +7,29 @@
 #include <math.h>
 #include <raylib.h>
 
-#define voxelSize 1
-#define chunkSize 4
-#define worldSize 2
-
-#define modDir "build/mods/"
-
-struct MeshFace {
-  size_t x;
-  size_t y;
-  size_t z;
-  size_t id;
-  uint8_t face;
-};
-
-struct ChunkMesh {
-  struct MeshFace* meshFaces;
-  size_t capacity;
-  size_t size;
-};
-
-struct VoxelData {
+struct VoxelType {
   const char* name;
-  Texture2D texture;
-};
-
-struct VoxelDataList {
-  struct VoxelData* voxelData;
-  size_t capacity;
-  size_t size;
-};
-
-struct Voxel {
-  Vector3 position;
-  size_t id;
+  size_t textureID;
 };
 
 struct Chunk {
-  Vector3 position;
-  struct Voxel* voxels;
-  struct ChunkMesh* mesh;
-};
-
-struct World {
-  struct Chunk** chunks;
-};
-
-struct WorldList {
-  struct World** worlds;
-  size_t capacity;
-  size_t size;
+  size_t x;
+  size_t y;
+  size_t z;
+  size_t dimID;
+  size_t* voxelIDs;
 };
 
 struct Game {
-  struct WorldList worldlist;
-  struct VoxelDataList voxelDataList;
-  struct ChunkMesh mesh;
+  struct Chunk** loadedChunks;
+  struct VoxelType* voxelType;
+  Texture2D* textures;
+  
+  struct {
+    size_t renderDistance;
+    size_t chunkSize;
+    char* modDirectory;
+  } settings;
 };
 
 struct Voxel* chunkPosToVoxel(struct Chunk*, int, int, int);
