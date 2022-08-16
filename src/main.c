@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include <raylib.h>
+#include <rlgl.h>
 
 #include "voxel/voxel.h"
 #include "api/api.h"
