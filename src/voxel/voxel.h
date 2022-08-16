@@ -22,8 +22,14 @@ struct Chunk {
 
 struct Game {
   struct Chunk** loadedChunks;
+  size_t chunkCapacity;
+  size_t chunkSize;
+
   struct VoxelType* voxelType;
+  size_t typeSize;
+
   Texture2D* textures;
+  size_t textureSize;
 
   struct {
     size_t renderDistance;
