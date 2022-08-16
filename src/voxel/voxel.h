@@ -17,6 +17,7 @@ struct MeshFace {
   size_t x;
   size_t y;
   size_t z;
+  size_t id;
   uint8_t face;
 };
 
