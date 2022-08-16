@@ -22,7 +22,7 @@ struct Chunk {
 
 struct Game {
   struct Chunk** loadedChunks;
-  size_t chunkCapacity;
+  size_t chunkCap;
   size_t chunkSize;
 
   struct VoxelType* voxelType;
