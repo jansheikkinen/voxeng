@@ -30,5 +30,6 @@ void initializeGameData(struct GameData*, size_t, size_t, const char*);
 void destroyGameData(struct GameData*);
 
 void loadChunk(struct GameData*, size_t, size_t, size_t, size_t);
+void unloadChunk(struct GameData*, size_t, size_t, size_t, size_t);
 
 #endif

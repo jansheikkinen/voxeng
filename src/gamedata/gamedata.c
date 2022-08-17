@@ -51,3 +51,18 @@ void loadChunk(struct GameData* game, size_t x, size_t y, size_t z, size_t dimID
   game->loadedChunks[game->chunkListSize]->voxelIDs = calloc(uintPow(game->settings.chunkSize, 3), sizeof(size_t));
   game->chunkListSize++;
 }
+
+void unloadChunk(struct GameData* game, size_t x, size_t y, size_t z, size_t dimID) {
+  register size_t index = 0;
+  for(register size_t i = 0; i < game->chunkListSize; i++) {
+    if(game->loadedChunks[i]->x == x && game->loadedChunks[i]->y == y
+      && game->loadedChunks[i]->z == z && game->loadedChunks[i]->dimID == dimID
+    ) {
+      index = i;
+    }
+  }
+  
+  game->loadedChunks[index] = game->loadedChunks[game->chunkListSize - 1];
+  free(game->loadedChunks[game->chunkListSize - 1]);
+  game->chunkListSize--;
+}
