@@ -29,4 +29,6 @@ struct GameData {
 void initializeGameData(struct GameData*, size_t, size_t, const char*);
 void destroyGameData(struct GameData*);
 
+void appendChunk(struct GameData*);
+
 #endif

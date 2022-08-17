@@ -42,5 +42,13 @@ void destroyGameData(struct GameData* game) {
   }
 }
 
-  free(game);
+void appendChunk(struct GameData* game) {
+  game->loadedChunks[game->chunkListSize] = malloc(sizeof(struct Chunk));
+  game->loadedChunks[game->chunkListSize]->x = 0;
+  game->loadedChunks[game->chunkListSize]->y = 1;
+  game->loadedChunks[game->chunkListSize]->z = 2;
+  game->loadedChunks[game->chunkListSize]->dimID = 2;
+  game->loadedChunks[game->chunkListSize]->voxelIDs = calloc(8, sizeof(size_t));
+  game->loadedChunks[game->chunkListSize]->voxelIDs[0] = 0;
+  game->chunkListSize++;
 }
