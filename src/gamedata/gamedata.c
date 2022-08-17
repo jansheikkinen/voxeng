@@ -40,6 +40,7 @@ void destroyGameData(struct GameData* game) {
   for(size_t i = 0; i < game->chunkListCap; i++) {
     destroyChunk(game->loadedChunks[i]);
   }
+}
 
   free(game);
 }
