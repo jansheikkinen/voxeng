@@ -37,7 +37,7 @@ void destroyGameData(struct GameData* game) {
   free(game->voxelTypes);
   free(game->textures);
 
-  for(size_t i = 0; i < game->chunkListCap; i++) {
+  for(size_t i = 0; i < game->chunkListSize; i++) {
     destroyChunk(game->loadedChunks[i]);
   }
 }
