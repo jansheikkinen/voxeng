@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-
 #include <raylib.h>
+#include <rlgl.h>
 
 #include "../voxel/voxel.h"
 

@@ -4,10 +4,7 @@
 #include <dirent.h>
 
 #include <math.h>
-#include <raylib.h>
-#include <rlgl.h>
 
-#include "gamedata/gamedata.h"
 #include "render/render.h"
 
 // Screen Dimensions
