@@ -19,5 +19,6 @@ struct ChunkMesh {
 };
 
 void initializeMesh(struct ChunkMesh*);
+void appendMeshFace(struct ChunkMesh*, struct MeshFace);
 
 #endif
