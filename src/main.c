@@ -8,7 +8,7 @@
 #include <rlgl.h>
 
 #include "gamedata/gamedata.h"
-
+#include "render/render.h"
 
 // Screen Dimensions
 const size_t scrWidth = 1000;
@@ -65,6 +65,10 @@ int main(void) {
     BeginMode3D(camera);
 
     // Render the world
+    for(size_t i = 0; i < gamedata.chunkListSize; i++) {
+      if(gamedata.loadedChunks[i]->dimID != 0) continue; // Only render chunks in dimension 0
+      renderChunk(&gamedata, gamedata.loadedChunks[i]);
+    }
 
     // Draw grids to show voxel, chunk, and world sizes
     // DrawGrid(2 * chunkSize * voxelSize, voxelSize);
