@@ -3,12 +3,15 @@
 
 #include <stdlib.h>
 
+#include "../mesh/mesh.h"
+
 struct Chunk {
   size_t x;
   size_t y;
   size_t z;
   size_t dimID;
   size_t* voxelIDs;
+  struct ChunkMesh* mesh;
 };
 
 struct VoxelType {
