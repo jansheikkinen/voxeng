@@ -2,6 +2,14 @@
 
 #include "mesh.h"
 
+size_t uintPow(size_t base, size_t exponent) {
+  size_t n = 1;
+  for(register size_t i = 0; i < exponent; i++) {
+    n *= base;
+  }
+  return n;
+}
+
 void initializeMesh(struct ChunkMesh* mesh) {
   mesh->cap = 8; // arbitrary value
   mesh->size = 0;

@@ -18,6 +18,8 @@ struct ChunkMesh {
   size_t size;
 };
 
+size_t uintPow(size_t base, size_t exponent);
+
 void initializeMesh(struct ChunkMesh*);
 void appendMeshFace(struct ChunkMesh*, struct MeshFace);
 
