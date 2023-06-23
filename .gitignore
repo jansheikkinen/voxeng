@@ -1,4 +1,3 @@
-build/voxeng
-*.o
-
-.vscode/
+target
+.vscode
+Cargo.lock
