@@ -3,7 +3,7 @@
 VoxEng (short for Voxel Engine) is a voxel-based game engine written in
 [Rust](https://www.rust-lang.org)).
 
-VoxEng was created by developers [Hayden](https://github.com/asianhaydenxd) and
+VoxEng was created by developers [Hayden](https://github.com/wh-taylor) and
 [Jans Heikkinen](https://github.com/jansheikkinen) to create a voxel-based game
 that would be very easy to modify.
 
